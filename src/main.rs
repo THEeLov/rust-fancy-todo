@@ -1,13 +1,6 @@
-use clap::Parser;
+use fancy_todo::error::Result;
+use fancy_todo::run::run;
 
-#[derive(Debug)]
-enum Command {
-    Add { title: String },
-    Remove { title: String },
-    Done { title: String },
-    List,
-}
-
-fn main() {
-    loop {}
+fn main() -> Result<()> {
+    run()
 }
