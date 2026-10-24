@@ -22,7 +22,7 @@ pub fn eval(list: &mut TodoList, command: Command) -> error::Result<Flow> {
         }
         Command::Done { name } => {
             let id = list.find_by_name(name)?;
-            list.done(id, true);
+            list.done(id, true)?;
         }
         Command::List => {
             println!("{list}");

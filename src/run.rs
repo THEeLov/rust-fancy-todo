@@ -69,16 +69,17 @@ impl TodoList {
 
     /// Marks the todo with the given `id` as done or not done.
     ///
-    /// # Panics
+    /// # Errors
     ///
-    /// Panics if no todo with `id` exists. Get the id from [`TodoList::find_by_name`].
-    pub fn done(&mut self, id: Uuid, is_done: bool) {
+    /// Returns [`error::AppError::TodoNotFound`] if no todo with `id` exists.
+    pub fn done(&mut self, id: Uuid, is_done: bool) -> error::Result<()> {
         let todo = self
             .todos
             .iter_mut()
             .find(|todo| todo.id == id)
-            .expect("Caller should garantee existence");
+            .ok_or_else(|| error::AppError::TodoNotFound(id.to_string()))?;
         todo.done = is_done;
+        Ok(())
     }
 
     /// Returns the id of the first todo named `name`.
